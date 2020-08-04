@@ -18,8 +18,8 @@ import (
 	otgrpc "github.com/opentracing-contrib/go-grpc"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
-	"github.com/whatisfaker/ms"
 	"github.com/whatisfaker/micro/grpcpool"
+	"github.com/whatisfaker/ms"
 	"github.com/whatisfaker/zaptrace/log"
 	"github.com/whatisfaker/zaptrace/tracing"
 	"go.uber.org/zap"
@@ -243,12 +243,12 @@ func (c *MSManager) GetGRPCConnPoolDirect(target string, opts ...grpc.DialOption
 }
 
 //Run 启动微服务
-func (c *MSManager) Run(name string, ctx context.Context) error {
-	return c.RunWith(name, ctx)
+func (c *MSManager) Run(ctx context.Context, name string) error {
+	return c.RunWith(ctx, name)
 }
 
 //RunWith 启动微服务伴随一些阻塞函数(mq consume, write gorutine)
-func (c *MSManager) RunWith(name string, ctx context.Context, fns ...func() error) error {
+func (c *MSManager) RunWith(ctx context.Context, name string, fns ...func() error) error {
 	//设置全局tracer
 	tracer, closer, err := tracing.NewTracer(name, c.log)
 	if err != nil {
