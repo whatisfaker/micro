@@ -72,7 +72,7 @@ func InitMSManager(opts ...Option) error {
 			confPath:  defaultConfPath,
 			ccType:    ccTypeFile,
 			scType:    scTypeNoop,
-			namespace: "center",
+			namespace: "public",
 			logLevel:  lv,
 			logger:    log.NewStdLogger(lv),
 		}
