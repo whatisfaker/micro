@@ -55,7 +55,7 @@ func (c *msTCP) Start(ctx context.Context) error {
 		opts = append(opts, ms.Codec(c.params.tcpCodec))
 	}
 	if c.params.tcpRoute != nil {
-		ms.RouterKeyExtract(c.params.tcpRoute)
+		opts = append(opts, ms.RouterKeyExtract(c.params.tcpRoute))
 	}
 	c.srv = ms.NewServer(opts...)
 	c.initFunc(c.srv)
