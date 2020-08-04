@@ -330,12 +330,13 @@ func (c *MSManager) RunWith(ctx context.Context, name string, fns ...func() erro
 	}
 	l := len(fns)
 	for i := 0; i < l; i++ {
+		fn := fns[i]
 		grp.Go(func() error {
 			ch := make(chan error)
 			defer close(ch)
 			go func() {
-				c.log.Trace(ctx).Info("run with block function", zap.Int("index", i))
-				if err := fns[i](); err != nil {
+				c.log.Trace(ctx).Info("run with block function")
+				if err := fn(); err != nil {
 					ch <- err
 					return
 				}

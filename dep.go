@@ -2,7 +2,6 @@ package micro
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 	"strings"
 	"time"
@@ -47,7 +46,7 @@ func newDeps(v interface{}, structTag string, log *log.Factory) (*Deps, error) {
 		if key, ok = tag.Lookup(structTag); ok {
 			key = strings.Trim(key, " ")
 			if key == "" {
-				return nil, ErrEmptyTag
+				continue
 			}
 		}
 		f := s.Field(i).Interface()
@@ -104,7 +103,7 @@ func newDeps(v interface{}, structTag string, log *log.Factory) (*Deps, error) {
 			d.deps[key] = dep
 		case conf.InfluxConfig:
 			influxConfig := ifxclient.HTTPConfig{
-				Addr:     fmt.Sprint("http://", s.Addr),
+				Addr:     s.Addr,
 				Username: s.UserName,
 				Password: s.Password,
 				Timeout:  30 * time.Second,
@@ -122,7 +121,7 @@ func newDeps(v interface{}, structTag string, log *log.Factory) (*Deps, error) {
 			d.deps[key] = influxClient
 		case *conf.InfluxConfig:
 			influxConfig := ifxclient.HTTPConfig{
-				Addr:     fmt.Sprint("http://", s.Addr),
+				Addr:     s.Addr,
 				Username: s.UserName,
 				Password: s.Password,
 				Timeout:  30 * time.Second,
