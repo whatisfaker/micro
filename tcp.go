@@ -90,3 +90,14 @@ func (c *msTCP) Shutdown(ctx context.Context) {
 		_ = c.srv.Shutdown(ctx)
 	}
 }
+
+//RegisterTCP 注册tcp的微服务
+func (c *MSManager) RegisterTCP(name string, listen string, initFunc func(*ms.Server), params ...Param) error {
+	svc, err := newTCPMicroService(name, listen, initFunc, c.log.With(zap.String("srv_tcp", name)), params...)
+	if err != nil {
+		c.log.Normal().Error("register tcp", zap.Error(err), zap.String("name", name), zap.String("listen", listen))
+		return err
+	}
+	c.svcs = append(c.svcs, svc)
+	return nil
+}

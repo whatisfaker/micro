@@ -13,13 +13,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	nacosgrpc "github.com/magicdvd/nacos-grpc"
 	otgrpc "github.com/opentracing-contrib/go-grpc"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"github.com/whatisfaker/micro/grpcpool"
-	"github.com/whatisfaker/ms"
 	"github.com/whatisfaker/zaptrace/log"
 	"github.com/whatisfaker/zaptrace/tracing"
 	"go.uber.org/zap"
@@ -151,39 +149,6 @@ func InitMSManager(opts ...Option) error {
 		}
 	})
 	return err
-}
-
-//RegisterGin 注册gin的http微服务
-func (c *MSManager) RegisterGin(name string, listen string, initFunc func(*gin.Engine), params ...Param) error {
-	svc, err := newGinMicroService(name, listen, initFunc, c.log.With(zap.String("srv_gin", name)), params...)
-	if err != nil {
-		c.log.Normal().Error("register gin", zap.Error(err), zap.String("name", name), zap.String("listen", listen))
-		return err
-	}
-	c.svcs = append(c.svcs, svc)
-	return nil
-}
-
-//RegisterGRPC 注册grpc的微服务
-func (c *MSManager) RegisterGRPC(name string, listen string, initFunc func(*grpc.Server), params ...Param) error {
-	svc, err := newGRPCMicroService(name, listen, initFunc, c.log.With(zap.String("srv_grpc", name)), params...)
-	if err != nil {
-		c.log.Normal().Error("register grpc", zap.Error(err), zap.String("name", name), zap.String("listen", listen))
-		return err
-	}
-	c.svcs = append(c.svcs, svc)
-	return nil
-}
-
-//RegisterTCP 注册tcp的微服务
-func (c *MSManager) RegisterTCP(name string, listen string, initFunc func(*ms.Server), params ...Param) error {
-	svc, err := newTCPMicroService(name, listen, initFunc, c.log.With(zap.String("srv_tcp", name)), params...)
-	if err != nil {
-		c.log.Normal().Error("register tcp", zap.Error(err), zap.String("name", name), zap.String("listen", listen))
-		return err
-	}
-	c.svcs = append(c.svcs, svc)
-	return nil
 }
 
 //Register 通用注册微服务（满足MicroService接口即可)

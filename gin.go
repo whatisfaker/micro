@@ -13,6 +13,7 @@ import (
 	"github.com/whatisfaker/gin-contrib/nethttp"
 	"github.com/whatisfaker/gin-contrib/validatoroverriding"
 	"github.com/whatisfaker/zaptrace/log"
+	"go.uber.org/zap"
 )
 
 type msGin struct {
@@ -123,4 +124,15 @@ func (c *msGin) Shutdown(ctx context.Context) {
 	if c.httpSrv != nil {
 		_ = c.httpSrv.Shutdown(ctx)
 	}
+}
+
+//RegisterGin 注册gin的http微服务
+func (c *MSManager) RegisterGin(name string, listen string, initFunc func(*gin.Engine), params ...Param) error {
+	svc, err := newGinMicroService(name, listen, initFunc, c.log.With(zap.String("srv_gin", name)), params...)
+	if err != nil {
+		c.log.Normal().Error("register gin", zap.Error(err), zap.String("name", name), zap.String("listen", listen))
+		return err
+	}
+	c.svcs = append(c.svcs, svc)
+	return nil
 }

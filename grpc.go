@@ -7,6 +7,7 @@ import (
 	otgrpc "github.com/opentracing-contrib/go-grpc"
 	"github.com/opentracing/opentracing-go"
 	"github.com/whatisfaker/zaptrace/log"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 )
 
@@ -87,4 +88,15 @@ func (c *msGRPC) Shutdown(ctx context.Context) {
 	if c.srv != nil {
 		c.srv.GracefulStop()
 	}
+}
+
+//RegisterGRPC 注册grpc的微服务
+func (c *MSManager) RegisterGRPC(name string, listen string, initFunc func(*grpc.Server), params ...Param) error {
+	svc, err := newGRPCMicroService(name, listen, initFunc, c.log.With(zap.String("srv_grpc", name)), params...)
+	if err != nil {
+		c.log.Normal().Error("register grpc", zap.Error(err), zap.String("name", name), zap.String("listen", listen))
+		return err
+	}
+	c.svcs = append(c.svcs, svc)
+	return nil
 }
