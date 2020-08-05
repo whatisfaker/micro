@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	defaultConfigDir = "conf"
+	nacosDefaultGroup = "DEFAULT_GROUP"
 )
 
 type nacosCC struct {
@@ -38,7 +38,7 @@ func (c *nacosCC) SetConfig(ctx context.Context, cfg interface{}) error {
 	if err != nil {
 		return err
 	}
-	err = c.client.PublishConfig(c.key, defaultConfigDir, string(b))
+	err = c.client.PublishConfig(c.key, nacosDefaultGroup, string(b))
 	if err != nil {
 		c.log.Trace(ctx).Error("SetConfig", zap.Error(err))
 	}
@@ -46,7 +46,7 @@ func (c *nacosCC) SetConfig(ctx context.Context, cfg interface{}) error {
 }
 
 func (c *nacosCC) RemoveConfig(ctx context.Context, cfg interface{}) error {
-	err := c.client.RemoveConfig(c.key, defaultConfigDir)
+	err := c.client.RemoveConfig(c.key, nacosDefaultGroup)
 	if err != nil {
 		c.log.Trace(ctx).Error("RemoveConfig", zap.Error(err))
 	}
@@ -54,7 +54,7 @@ func (c *nacosCC) RemoveConfig(ctx context.Context, cfg interface{}) error {
 }
 
 func (c *nacosCC) GetConfig(ctx context.Context, cfg interface{}) error {
-	str, err := c.client.GetConfig(c.key, defaultConfigDir)
+	str, err := c.client.GetConfig(c.key, nacosDefaultGroup)
 	if err != nil {
 		c.log.Trace(ctx).Error("GetConfig", zap.Error(err))
 	}
