@@ -28,8 +28,7 @@ func newNacosSC(addr string, namespace string, log *log.Factory) (*nacosSC, erro
 
 func (c *nacosSC) Register(ctx context.Context, svc MicroService) error {
 	ip, port := svc.Discovery()
-	// c.log.Trace(ctx).Debug("register service", zap.String("name", svc.Name()), zap.String("ip", ip), zap.Uint("port", port), zap.Uint32("weight", svc.Weight()), zap.String("group", svc.Group()), zap.Any("metadata", svc.Metadata()))
-	// return c.client.RegisterService(svc.Name(), svc.Group(), ip, port, svc.Weight(), svc.Metadata(), defaultTTL, defaultService)
+	c.log.Trace(ctx).Debug("register service", zap.String("name", svc.Name()), zap.String("ip", ip), zap.Uint("port", port), zap.Uint32("weight", svc.Weight()), zap.String("group", svc.Group()), zap.Any("metadata", svc.Metadata()))
 	return c.client.RegisterInstance(ip, port, svc.Name(), nacos.ParamWeight(float64(svc.Weight())), nacos.ParamMetadata(svc.Metadata()), nacos.ParamGroupName(svc.Group()))
 }
 

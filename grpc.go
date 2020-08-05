@@ -82,3 +82,9 @@ func (c *msGRPC) Group() string {
 func (c *msGRPC) Metadata() map[string]interface{} {
 	return c.params.metadata
 }
+
+func (c *msGRPC) Shutdown(ctx context.Context) {
+	if c.srv != nil {
+		c.srv.GracefulStop()
+	}
+}

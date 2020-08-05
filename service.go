@@ -20,6 +20,8 @@ type MicroService interface {
 	Metadata() map[string]interface{}
 	//Weight 权重
 	Weight() uint32
+	//Shutdown 关闭
+	Shutdown(context.Context)
 }
 
 //ServiceCenter 服务注册接口定义

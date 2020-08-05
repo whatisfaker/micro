@@ -73,6 +73,7 @@ func InitMSManager(opts ...Option) error {
 			ccType:    ccTypeFile,
 			scType:    scTypeNoop,
 			namespace: "public",
+			configKey: "go_config",
 			logLevel:  lv,
 			logger:    log.NewStdLogger(lv),
 		}
@@ -324,6 +325,9 @@ func (c *MSManager) RunWith(ctx context.Context, name string, fns ...func() erro
 			case err := <-ch:
 				return err
 			case <-ctx.Done():
+				cctx, cancel := context.WithTimeout(context.TODO(), 5*time.Second)
+				svc.Shutdown(cctx)
+				cancel()
 				return ctx.Err()
 			}
 		})

@@ -86,6 +86,12 @@ func (c *msTCP) Metadata() map[string]interface{} {
 	return c.params.metadata
 }
 
+func (c *msTCP) Shutdown(ctx context.Context) {
+	if c.srv != nil {
+		_ = c.srv.Shutdown(ctx)
+	}
+}
+
 type zapLogger struct {
 	zaplogger *log.Factory
 }

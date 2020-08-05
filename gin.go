@@ -24,6 +24,7 @@ type msGin struct {
 	name        string
 	log         *log.Factory
 	initFunc    func(*gin.Engine)
+	httpSrv     *http.Server
 }
 
 var _ MicroService = (*msGin)(nil)
@@ -88,11 +89,11 @@ func (c *msGin) Start(ctx context.Context) error {
 		})
 	}
 	c.initFunc(c.srv)
-	srv := &http.Server{
+	c.httpSrv = &http.Server{
 		Addr:    c.listen,
 		Handler: c.srv,
 	}
-	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+	if err := c.httpSrv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		return err
 	}
 	return nil
@@ -116,4 +117,10 @@ func (c *msGin) Group() string {
 
 func (c *msGin) Metadata() map[string]interface{} {
 	return c.params.metadata
+}
+
+func (c *msGin) Shutdown(ctx context.Context) {
+	if c.httpSrv != nil {
+		_ = c.httpSrv.Shutdown(ctx)
+	}
 }
