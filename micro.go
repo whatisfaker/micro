@@ -249,7 +249,7 @@ func (c *MSManager) Run(ctx context.Context, name string) error {
 }
 
 //RunWith 启动微服务伴随一些阻塞函数(mq consume, write gorutine)
-func (c *MSManager) RunWith(ctx context.Context, name string, fns ...func() error) error {
+func (c *MSManager) RunWith(ctx context.Context, name string, fns ...func(context.Context) error) error {
 	//设置全局tracer
 	tracer, closer, err := tracing.NewTracer(name, c.log)
 	if err != nil {
@@ -336,22 +336,8 @@ func (c *MSManager) RunWith(ctx context.Context, name string, fns ...func() erro
 	for i := 0; i < l; i++ {
 		fn := fns[i]
 		grp.Go(func() error {
-			ch := make(chan error)
-			go func() {
-				defer close(ch)
-				c.log.Trace(ctx).Info("run with block function")
-				if err := fn(); err != nil {
-					ch <- err
-					return
-				}
-				ch <- nil
-			}()
-			select {
-			case err := <-ch:
-				return err
-			case <-ctx.Done():
-				return ctx.Err()
-			}
+			c.log.Trace(ctx).Info("run with block function")
+			return fn(ctx)
 		})
 	}
 	grp.Go(func() error {
