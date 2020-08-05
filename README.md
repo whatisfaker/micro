@@ -83,10 +83,11 @@ GetRabbitMQ(key string) amqp.Client
 
 特有参数
 
-| 参数                | 说明                        |
-| ------------------- | --------------------------- |
-| ParamWebHealthCheck | 健康检查的路径(/healthz)    |
-| ParamWebValidateCN  | 使用中文校验信息(默认:true) |
+| 参数                 | 说明                            |
+| -------------------- | ------------------------------- |
+| ParamWebHealthCheck  | 健康检查的路径(/healthz)        |
+| ParamWebValidateCN   | 使用中文校验信息(默认:true)     |
+| ParamWebGinAuditFunc | 设置审计日志存储(默认:空不存储) |
 
 ```golang
 //注册gin服务

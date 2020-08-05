@@ -16,7 +16,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/uber/jaeger-client-go v2.25.0+incompatible // indirect
 	github.com/whatisfaker/conf v0.0.0-20200716083323-99d25ba12de4
-	github.com/whatisfaker/gin-contrib v0.0.0-20200804095143-92d3ffdfa432
+	github.com/whatisfaker/gin-contrib v0.0.0-20200805080910-3cf482a5faf3
 	github.com/whatisfaker/gormzap v0.0.0-20200425142924-3b939e0299a9
 	github.com/whatisfaker/ms v0.0.0-20200727035413-258f81d2ab6e
 	github.com/whatisfaker/zaptrace v0.0.0-20200728144141-eeea96c00ec9

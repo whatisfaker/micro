@@ -1,14 +1,19 @@
 package micro
 
-import "github.com/whatisfaker/ms/codec"
+import (
+	"github.com/gin-gonic/gin"
+	auditlog "github.com/whatisfaker/gin-contrib/audit"
+	"github.com/whatisfaker/ms/codec"
+)
 
 const (
 	defaultHealthzPath = "/healthz"
 )
 
 type paramMap struct {
-	webHealthCheck  string
-	webValidateCN   bool
+	webHealthCheck string
+	webValidateCN  bool
+	//webGinAuditMW   func(*auditlog.AuditLog, *gin.Context)
 	enableTracer    bool
 	ignoreTracePath []string
 	discoveryIP     string
@@ -85,6 +90,12 @@ func ParamWebHealthCheck(enable bool, path ...string) Param {
 func ParamWebValidateCN(enable bool) Param {
 	return newParam(func(m *paramMap) {
 		m.webValidateCN = enable
+	})
+}
+
+func ParamWebGinAuditFunc(f func(*auditlog.AuditLog, *gin.Context)) Param {
+	return newParam(func(m *paramMap) {
+		auditlog.MWAuditlogHandler = f
 	})
 }
 
