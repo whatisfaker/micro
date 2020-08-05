@@ -16,7 +16,7 @@ type nacosSC struct {
 var _ ServiceCenter = (*nacosSC)(nil)
 
 func newNacosSC(addr string, namespace string, log *log.Factory) (*nacosSC, error) {
-	client, err := nacos.NewServiceClient(addr, nacos.DefaultNameSpaceID(namespace))
+	client, err := nacos.NewServiceClient(addr, nacos.DefaultNameSpaceID(namespace), nacos.Log(NewZapLogger(log)), nacos.LogLevel(log.Level()))
 	if err != nil {
 		return nil, err
 	}
