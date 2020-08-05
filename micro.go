@@ -311,8 +311,8 @@ func (c *MSManager) RunWith(ctx context.Context, name string, fns ...func() erro
 		})
 		grp.Go(func() error {
 			ch := make(chan error)
-			defer close(ch)
 			go func() {
+				defer close(ch)
 				ip, port := svc.Discovery()
 				c.log.Trace(ctx).Info("start service", zap.String("name", svc.Name()), zap.String("ip", ip), zap.Uint("port", port))
 				if err := svc.Start(ctx); err != nil {
@@ -337,8 +337,8 @@ func (c *MSManager) RunWith(ctx context.Context, name string, fns ...func() erro
 		fn := fns[i]
 		grp.Go(func() error {
 			ch := make(chan error)
-			defer close(ch)
 			go func() {
+				defer close(ch)
 				c.log.Trace(ctx).Info("run with block function")
 				if err := fn(); err != nil {
 					ch <- err
