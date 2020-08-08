@@ -15,7 +15,7 @@ require (
 	github.com/opentracing-contrib/go-grpc v0.0.0-20191001143057-db30781987df
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/uber/jaeger-client-go v2.25.0+incompatible // indirect
-	github.com/whatisfaker/conf v0.0.0-20200716083323-99d25ba12de4
+	github.com/whatisfaker/conf v0.0.0-20200808060023-416d0dab7e9d
 	github.com/whatisfaker/gin-contrib v0.0.0-20200805080910-3cf482a5faf3
 	github.com/whatisfaker/gormzap v0.0.0-20200425142924-3b939e0299a9
 	github.com/whatisfaker/ms v0.0.0-20200727035413-258f81d2ab6e
