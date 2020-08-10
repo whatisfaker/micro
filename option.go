@@ -13,7 +13,7 @@ const (
 	scTypeNacos int8 = iota + 1
 	scTypeNoop
 
-	defaultConfPath = "conf/dhms.yaml"
+	defaultConfPath = "config.yaml"
 )
 
 type options struct {
