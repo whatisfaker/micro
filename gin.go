@@ -89,7 +89,9 @@ func (c *msGin) Start(ctx context.Context) error {
 			ctx.String(http.StatusOK, "ok")
 		})
 	}
-	c.initFunc(ctx, c.srv)
+	if c.initFunc != nil {
+		c.initFunc(ctx, c.srv)
+	}
 	c.httpSrv = &http.Server{
 		Addr:    c.listen,
 		Handler: c.srv,

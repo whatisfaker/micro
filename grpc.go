@@ -61,6 +61,9 @@ func (c *msGRPC) Start(ctx context.Context) error {
 	} else {
 		c.srv = grpc.NewServer()
 	}
+	if c.initFunc != nil {
+		c.initFunc(ctx, c.srv)
+	}
 	return c.srv.Serve(grpcListen)
 }
 

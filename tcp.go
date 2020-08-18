@@ -57,7 +57,9 @@ func (c *msTCP) Start(ctx context.Context) error {
 		opts = append(opts, ms.RouterKeyExtract(c.params.tcpRoute))
 	}
 	c.srv = ms.NewServer(opts...)
-	c.initFunc(ctx, c.srv)
+	if c.initFunc != nil {
+		c.initFunc(ctx, c.srv)
+	}
 	tcpListen, err := net.Listen("tcp", c.listen)
 	if err != nil {
 		return err
