@@ -19,12 +19,12 @@ type msGRPC struct {
 	port        uint
 	name        string
 	log         *log.Factory
-	initFunc    func(*grpc.Server)
+	initFunc    func(context.Context, *grpc.Server)
 }
 
 var _ MicroService = (*msGRPC)(nil)
 
-func newGRPCMicroService(name string, listen string, initFunc func(*grpc.Server), log *log.Factory, params ...Param) (*msGRPC, error) {
+func newGRPCMicroService(name string, listen string, initFunc func(context.Context, *grpc.Server), log *log.Factory, params ...Param) (*msGRPC, error) {
 	p := &paramMap{
 		enableTracer: true,
 		metadata:     map[string]interface{}{},
@@ -91,7 +91,7 @@ func (c *msGRPC) Shutdown(ctx context.Context) {
 }
 
 //RegisterGRPC 注册grpc的微服务
-func (c *MSManager) RegisterGRPC(name string, listen string, initFunc func(*grpc.Server), params ...Param) error {
+func (c *MSManager) RegisterGRPC(name string, listen string, initFunc func(context.Context, *grpc.Server), params ...Param) error {
 	svc, err := newGRPCMicroService(name, listen, initFunc, c.log.With(zap.String("srv_grpc", name)), params...)
 	if err != nil {
 		c.log.Normal().Error("register grpc", zap.Error(err), zap.String("name", name), zap.String("listen", listen))

@@ -17,12 +17,12 @@ type msTCP struct {
 	port        uint
 	name        string
 	log         *log.Factory
-	initFunc    func(*ms.Server)
+	initFunc    func(context.Context, *ms.Server)
 }
 
 var _ MicroService = (*msTCP)(nil)
 
-func newTCPMicroService(name string, listen string, initFunc func(*ms.Server), log *log.Factory, params ...Param) (*msTCP, error) {
+func newTCPMicroService(name string, listen string, initFunc func(context.Context, *ms.Server), log *log.Factory, params ...Param) (*msTCP, error) {
 	p := &paramMap{
 		metadata: map[string]interface{}{},
 		weight:   defaultMSWeight,
@@ -57,7 +57,7 @@ func (c *msTCP) Start(ctx context.Context) error {
 		opts = append(opts, ms.RouterKeyExtract(c.params.tcpRoute))
 	}
 	c.srv = ms.NewServer(opts...)
-	c.initFunc(c.srv)
+	c.initFunc(ctx, c.srv)
 	tcpListen, err := net.Listen("tcp", c.listen)
 	if err != nil {
 		return err
@@ -92,7 +92,7 @@ func (c *msTCP) Shutdown(ctx context.Context) {
 }
 
 //RegisterTCP 注册tcp的微服务
-func (c *MSManager) RegisterTCP(name string, listen string, initFunc func(*ms.Server), params ...Param) error {
+func (c *MSManager) RegisterTCP(name string, listen string, initFunc func(context.Context, *ms.Server), params ...Param) error {
 	svc, err := newTCPMicroService(name, listen, initFunc, c.log.With(zap.String("srv_tcp", name)), params...)
 	if err != nil {
 		c.log.Normal().Error("register tcp", zap.Error(err), zap.String("name", name), zap.String("listen", listen))

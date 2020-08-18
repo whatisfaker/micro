@@ -24,13 +24,13 @@ type msGin struct {
 	port        uint
 	name        string
 	log         *log.Factory
-	initFunc    func(*gin.Engine)
+	initFunc    func(context.Context, *gin.Engine)
 	httpSrv     *http.Server
 }
 
 var _ MicroService = (*msGin)(nil)
 
-func newGinMicroService(name string, listen string, initFunc func(*gin.Engine), log *log.Factory, params ...Param) (*msGin, error) {
+func newGinMicroService(name string, listen string, initFunc func(context.Context, *gin.Engine), log *log.Factory, params ...Param) (*msGin, error) {
 	p := &paramMap{
 		webHealthCheck:  defaultHealthzPath,
 		webValidateCN:   true,
@@ -89,7 +89,7 @@ func (c *msGin) Start(ctx context.Context) error {
 			ctx.String(http.StatusOK, "ok")
 		})
 	}
-	c.initFunc(c.srv)
+	c.initFunc(ctx, c.srv)
 	c.httpSrv = &http.Server{
 		Addr:    c.listen,
 		Handler: c.srv,
@@ -127,7 +127,7 @@ func (c *msGin) Shutdown(ctx context.Context) {
 }
 
 //RegisterGin 注册gin的http微服务
-func (c *MSManager) RegisterGin(name string, listen string, initFunc func(*gin.Engine), params ...Param) error {
+func (c *MSManager) RegisterGin(name string, listen string, initFunc func(context.Context, *gin.Engine), params ...Param) error {
 	svc, err := newGinMicroService(name, listen, initFunc, c.log.With(zap.String("srv_gin", name)), params...)
 	if err != nil {
 		c.log.Normal().Error("register gin", zap.Error(err), zap.String("name", name), zap.String("listen", listen))
