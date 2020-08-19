@@ -88,8 +88,10 @@ func (c *msTCP) Metadata() map[string]interface{} {
 }
 
 func (c *msTCP) Shutdown(ctx context.Context) {
-	if c.srv != nil {
-		_ = c.srv.Shutdown(ctx)
+	if !c.params.tcpManulShutdown {
+		if c.srv != nil {
+			_ = c.srv.Shutdown(ctx)
+		}
 	}
 }
 

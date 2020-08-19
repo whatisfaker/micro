@@ -14,13 +14,14 @@ type paramMap struct {
 	webHealthCheck string
 	webValidateCN  bool
 	//webGinAuditMW   func(*auditlog.AuditLog, *gin.Context)
-	enableTracer    bool
-	ignoreTracePath []string
-	discoveryIP     string
-	weight          uint32
-	metadata        map[string]interface{}
-	tcpCodec        codec.Codec
-	tcpRoute        func([]byte) int
+	enableTracer     bool
+	ignoreTracePath  []string
+	discoveryIP      string
+	weight           uint32
+	metadata         map[string]interface{}
+	tcpCodec         codec.Codec
+	tcpRoute         func([]byte) int
+	tcpManulShutdown bool
 }
 
 type Param interface {
@@ -108,5 +109,11 @@ func ParamTCPCodec(codec codec.Codec) Param {
 func ParamTCPRoute(fn func([]byte) int) Param {
 	return newParam(func(m *paramMap) {
 		m.tcpRoute = fn
+	})
+}
+
+func ParamTCPManualShutdown() Param {
+	return newParam(func(m *paramMap) {
+		m.tcpManulShutdown = true
 	})
 }
