@@ -1,6 +1,8 @@
 package micro
 
 import (
+	"time"
+
 	"github.com/gin-gonic/gin"
 	auditlog "github.com/whatisfaker/gin-contrib/audit"
 	"github.com/whatisfaker/ms/codec"
@@ -22,6 +24,7 @@ type paramMap struct {
 	tcpCodec         codec.Codec
 	tcpRoute         func([]byte) int
 	tcpManulShutdown bool
+	tcpIdleTime      time.Duration
 }
 
 type Param interface {
@@ -115,5 +118,11 @@ func ParamTCPRoute(fn func([]byte) int) Param {
 func ParamTCPManualShutdown() Param {
 	return newParam(func(m *paramMap) {
 		m.tcpManulShutdown = true
+	})
+}
+
+func ParamTCPIdleTime(d time.Duration) Param {
+	return newParam(func(m *paramMap) {
+		m.tcpIdleTime = d
 	})
 }

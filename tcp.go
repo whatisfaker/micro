@@ -3,6 +3,7 @@ package micro
 import (
 	"context"
 	"net"
+	"time"
 
 	"github.com/whatisfaker/ms"
 	"github.com/whatisfaker/zaptrace/log"
@@ -24,10 +25,11 @@ var _ MicroService = (*msTCP)(nil)
 
 func newTCPMicroService(name string, listen string, initFunc func(context.Context, *ms.Server), log *log.Factory, params ...Param) (*msTCP, error) {
 	p := &paramMap{
-		metadata: map[string]interface{}{},
-		weight:   defaultMSWeight,
-		tcpCodec: nil,
-		tcpRoute: nil,
+		metadata:    map[string]interface{}{},
+		weight:      defaultMSWeight,
+		tcpCodec:    nil,
+		tcpRoute:    nil,
+		tcpIdleTime: time.Minute,
 	}
 	for _, v := range params {
 		v.apply(p)
@@ -55,6 +57,9 @@ func (c *msTCP) Start(ctx context.Context) error {
 	}
 	if c.params.tcpRoute != nil {
 		opts = append(opts, ms.RouterKeyExtract(c.params.tcpRoute))
+	}
+	if c.params.tcpIdleTime > 0 {
+		opts = append(opts, ms.ConnMaxIdleTime(c.params.tcpIdleTime))
 	}
 	c.srv = ms.NewServer(opts...)
 	if c.initFunc != nil {
