@@ -161,6 +161,10 @@ func (c *MSManager) ConfigCenter() ConfigCenter {
 	return c.confCenter
 }
 
+func (c *MSManager) ServiceInstances(ctx context.Context, name string, group string) ([]*MicroServiceInfo, error) {
+	return c.svcCenter.ServiceInstances(ctx, name, group)
+}
+
 //GlobalLogger 获取全局的日志管理
 func (c *MSManager) GlobalLogger() *log.Factory {
 	return c.log

@@ -123,6 +123,14 @@ RegisterTCP(name string, listen string, initFunc func(*ms.Server), params ...Par
 Register(svcs ...MicroService)
 ```
 
+## 获取服务
+
+获取服务列表
+
+```golang
+ServiceInstances(ctx context.Context, name string, group string) ([]*MicroServiceInfo, error)
+```
+
 ## 日志
 
 获取全局的日志

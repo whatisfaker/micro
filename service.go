@@ -24,10 +24,21 @@ type MicroService interface {
 	Shutdown(context.Context)
 }
 
+type MicroServiceInfo struct {
+	Name     string
+	IP       string
+	Port     uint
+	Group    string
+	Weight   uint32
+	Metadata map[string]string
+}
+
 //ServiceCenter 服务注册接口定义
 type ServiceCenter interface {
 	//Register 注册服务
 	Register(context.Context, MicroService) error
 	//Deregister 取消注册
 	Deregister(context.Context, MicroService) error
+	//ServiceInstances 获取服务信息
+	ServiceInstances(context.Context, string, string) ([]*MicroServiceInfo, error)
 }

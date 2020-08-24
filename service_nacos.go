@@ -37,3 +37,22 @@ func (c *nacosSC) Deregister(ctx context.Context, svc MicroService) error {
 	c.log.Trace(ctx).Debug("deregister service", zap.String("name", svc.Name()), zap.String("ip", ip), zap.Uint("port", port), zap.Uint32("weight", svc.Weight()), zap.String("group", svc.Group()), zap.Any("metadata", svc.Metadata()))
 	return c.client.DeregisterInstance(ip, port, svc.Name(), nacos.ParamWeight(float64(svc.Weight())), nacos.ParamMetadata(svc.Metadata()), nacos.ParamGroupName(svc.Group()))
 }
+
+func (c *nacosSC) ServiceInstances(ctx context.Context, name string, group string) ([]*MicroServiceInfo, error) {
+	svc, err := c.client.GetService(name, true, nacos.ParamGroupName(group))
+	if err != nil {
+		return nil, err
+	}
+	instances := make([]*MicroServiceInfo, 0)
+	for _, v := range svc.Instances {
+		instances = append(instances, &MicroServiceInfo{
+			IP:       v.Ip,
+			Port:     uint(v.Port),
+			Name:     name,
+			Weight:   uint32(v.Weight),
+			Metadata: v.Metadata,
+			Group:    group,
+		})
+	}
+	return instances, nil
+}
