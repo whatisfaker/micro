@@ -31,6 +31,12 @@ const (
 	EnvLogLevel     = "LOG_LEVEL"
 )
 
+const (
+	MSGroupTCPServer = "TCP_SERVER"
+	MSGroupGRPC      = "GRPC"
+	MSGroupWeb       = "DEFAULT_GROUP"
+)
+
 var ErrNoNacosAddr = errors.New("no addr option setting(ENV:NACOS_ADDR)")
 var ErrNoFileConfigPathSet = errors.New("empty config path option setting(ENV:CONFIG_PATH)")
 var ErrNoConfigKey = errors.New("no config key")

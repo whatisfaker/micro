@@ -80,7 +80,7 @@ func (c *msTCP) Weight() uint32 {
 }
 
 func (c *msTCP) Group() string {
-	return "TCP_SERVER"
+	return MSGroupTCPServer
 }
 
 func (c *msTCP) Metadata() map[string]interface{} {

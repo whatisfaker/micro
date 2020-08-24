@@ -80,7 +80,7 @@ func (c *msGRPC) Weight() uint32 {
 }
 
 func (c *msGRPC) Group() string {
-	return "GRPC"
+	return MSGroupGRPC
 }
 
 func (c *msGRPC) Metadata() map[string]interface{} {

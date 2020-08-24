@@ -115,7 +115,7 @@ func (c *msGin) Weight() uint32 {
 }
 
 func (c *msGin) Group() string {
-	return "DEFAULT_GROUP"
+	return MSGroupWeb
 }
 
 func (c *msGin) Metadata() map[string]interface{} {
