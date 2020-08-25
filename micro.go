@@ -27,10 +27,11 @@ import (
 )
 
 const (
-	EnvNacosAddr     = "NACOS_ADDR" //127.0.0.1:2379
-	EnvConfFilePath  = "CONFIG_PATH"
-	EnvLogLevel      = "LOG_LEVEL"
-	EnvApplicationID = "MS_APPLICATION_ID"
+	EnvNacosAddr      = "NACOS_ADDR" //127.0.0.1:2379
+	EnvConfFilePath   = "CONFIG_PATH"
+	EnvLogLevel       = "LOG_LEVEL"
+	EnvApplicationID  = "MS_APPLICATION_ID"
+	EnvNacosConfigKey = "NACOS_CONFIG_KEY"
 )
 
 const (
@@ -95,6 +96,10 @@ func InitMSManager(opts ...Option) error {
 			options.scType = scTypeNacos
 			options.ccType = ccTypeNacos
 			options.addr = addr
+		}
+		configKey := os.Getenv(EnvNacosConfigKey)
+		if configKey != "" {
+			options.configKey = configKey
 		}
 		//如果配置了文件路径，使用配置的文件配置中心
 		fp := os.Getenv(EnvConfFilePath)
