@@ -204,6 +204,29 @@ func (c *MSManager) ParseConfig(v interface{}, structTag ...string) (*Deps, erro
 	return newDeps(v, tag, c.log.With(zap.String("deps", "deps")))
 }
 
+func (c *MSManager) GetGRPCConn(name string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+	if len(c.options.addr) == 0 {
+		err := ErrNoNacosAddr
+		c.log.Normal().Error("get grpc conn", zap.Error(err))
+		return nil, err
+	}
+	target := nacosgrpc.Target(c.options.addr, name, nacosgrpc.OptionGroupName("GRPC"))
+	tracer := opentracing.GlobalTracer()
+	options := make([]grpc.DialOption, 0)
+	options = append(options, grpc.WithInsecure())
+	if _, ok := tracer.(opentracing.NoopTracer); ok {
+		options = append(options, opts...)
+	} else if _, ok := tracer.(*opentracing.NoopTracer); ok {
+		options = opts
+	} else {
+		options = append(options,
+			grpc.WithUnaryInterceptor(otgrpc.OpenTracingClientInterceptor(tracer)),
+			grpc.WithStreamInterceptor(otgrpc.OpenTracingStreamClientInterceptor(tracer)))
+		options = append(options, opts...)
+	}
+	return grpc.DialContext(context.TODO(), target, options...)
+}
+
 //GetGRPCConnPool 根据服务名获取grpc的连接池
 func (c *MSManager) GetGRPCConnPool(name string, opts ...grpc.DialOption) (*grpcpool.Pool, error) {
 	if len(c.options.addr) == 0 {
