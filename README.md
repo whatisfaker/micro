@@ -25,8 +25,10 @@ InitMSManager 参数
 
 ```golang
 NACOS_ADDR //127.0.0.1:8848
+NACOS_CONFIG_KEY //config存储地址默认: go_config
 CONFIG_PATH //配置文件路径 conf/test.yaml
 LOG_LEVEL //日志等级(debug,info,warn,error) 默认:info
+MS_APPLICATION_ID //应用ID 默认:随机UUID
 ```
 
 注：如果配置了nacos,则配置中心也将使用nacos, 如果配置中心想使用文件，请配置FileConfigCenter或者环境变量CONFIG_PATH
