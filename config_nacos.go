@@ -2,6 +2,7 @@ package micro
 
 import (
 	"context"
+	"errors"
 
 	"github.com/magicdvd/nacos-client"
 	"github.com/whatisfaker/zaptrace/log"
@@ -54,9 +55,15 @@ func (c *nacosCC) RemoveConfig(ctx context.Context, cfg interface{}) error {
 }
 
 func (c *nacosCC) GetConfig(ctx context.Context, cfg interface{}) error {
+	if c.key == "" {
+		err := errors.New("nacos config key is empty")
+		c.log.Trace(ctx).Error("GetConfig", zap.Error(err))
+		return err
+	}
 	str, err := c.client.GetConfig(c.key, nacosDefaultGroup)
 	if err != nil {
 		c.log.Trace(ctx).Error("GetConfig", zap.Error(err))
+		return err
 	}
 	if str != "" {
 		return yaml.Unmarshal([]byte(str), cfg)
