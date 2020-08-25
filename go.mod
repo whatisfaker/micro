@@ -7,6 +7,7 @@ require (
 	github.com/go-playground/validator/v10 v10.3.0
 	github.com/go-redis/redis/v7 v7.4.0
 	github.com/golang/protobuf v1.4.2 // indirect
+	github.com/google/uuid v1.1.1
 	github.com/influxdata/influxdb1-client v0.0.0-20200515024757-02f0bf5dbca3
 	github.com/jinzhu/gorm v1.9.15
 	github.com/magicdvd/nacos-client v0.0.0-20200719104904-20c27156a870

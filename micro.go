@@ -13,6 +13,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/google/uuid"
 	nacosgrpc "github.com/magicdvd/nacos-grpc"
 	otgrpc "github.com/opentracing-contrib/go-grpc"
 	"github.com/opentracing/opentracing-go"
@@ -26,9 +27,10 @@ import (
 )
 
 const (
-	EnvNacosAddr    = "NACOS_ADDR" //127.0.0.1:2379
-	EnvConfFilePath = "CONFIG_PATH"
-	EnvLogLevel     = "LOG_LEVEL"
+	EnvNacosAddr     = "NACOS_ADDR" //127.0.0.1:2379
+	EnvConfFilePath  = "CONFIG_PATH"
+	EnvLogLevel      = "LOG_LEVEL"
+	EnvApplicationID = "MS_APPLICATION_ID"
 )
 
 const (
@@ -80,6 +82,13 @@ func InitMSManager(opts ...Option) error {
 			configKey: "go_config",
 			logLevel:  lv,
 			logger:    log.NewStdLogger(lv),
+		}
+		appID := os.Getenv(EnvApplicationID)
+		if appID == "" {
+			options.applicationID = appID
+		} else {
+			uuidObj, _ := uuid.NewRandom()
+			options.applicationID = uuidObj.String()
 		}
 		addr := os.Getenv(EnvNacosAddr)
 		if addr != "" {
@@ -155,6 +164,11 @@ func InitMSManager(opts ...Option) error {
 		}
 	})
 	return err
+}
+
+//ApplicationID 获取应用的唯一ID
+func (c *MSManager) ApplicationID() string {
+	return c.options.applicationID
 }
 
 //Register 通用注册微服务（满足MicroService接口即可)

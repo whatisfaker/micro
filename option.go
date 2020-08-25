@@ -17,18 +17,19 @@ const (
 )
 
 type options struct {
-	addr         string
-	configKey    string
-	confPath     string
-	ccType       int8
-	scType       int8
-	namespace    string
-	logLevel     string
-	logger       *log.Factory
-	mysqlTracer  bool
-	redisTracer  bool
-	mongoTracer  bool
-	influxTracer bool
+	applicationID string
+	addr          string
+	configKey     string
+	confPath      string
+	ccType        int8
+	scType        int8
+	namespace     string
+	logLevel      string
+	logger        *log.Factory
+	mysqlTracer   bool
+	redisTracer   bool
+	mongoTracer   bool
+	influxTracer  bool
 }
 
 type Option interface {
