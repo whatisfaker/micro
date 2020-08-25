@@ -85,7 +85,7 @@ func InitMSManager(opts ...Option) error {
 			logger:    log.NewStdLogger(lv),
 		}
 		appID := os.Getenv(EnvApplicationID)
-		if appID == "" {
+		if appID != "" {
 			options.applicationID = appID
 		} else {
 			uuidObj, _ := uuid.NewRandom()
