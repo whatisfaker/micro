@@ -50,12 +50,12 @@ func (c *fileCC) RemoveConfig(ctx context.Context, cfg interface{}) error {
 func (c *fileCC) GetConfig(ctx context.Context, cfg interface{}) error {
 	b, err := ioutil.ReadFile(c.path)
 	if err != nil {
-		c.log.Trace(ctx).Error("RemoveConfig", zap.Error(err))
+		c.log.Trace(ctx).Error("GetConfig", zap.Error(err))
 		return err
 	}
 	err = yaml.Unmarshal(b, cfg)
 	if err != nil {
-		c.log.Trace(ctx).Error("RemoveConfig", zap.Error(err))
+		c.log.Trace(ctx).Error("GetConfig", zap.Error(err))
 	}
 	return err
 }
