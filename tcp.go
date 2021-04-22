@@ -61,6 +61,13 @@ func (c *msTCP) Start(ctx context.Context) error {
 	if c.params.tcpIdleTime > 0 {
 		opts = append(opts, ms.ConnMaxIdleTime(c.params.tcpIdleTime))
 	}
+	if c.params.tcpBufSizeMin > 0 {
+		if c.params.tcpBufSizeMax > c.params.tcpBufSizeMin {
+			opts = append(opts, ms.BufferSize(c.params.tcpBufSizeMin, c.params.tcpBufSizeMax))
+		} else {
+			opts = append(opts, ms.BufferSize(c.params.tcpBufSizeMin))
+		}
+	}
 	c.srv = ms.NewServer(opts...)
 	if c.initFunc != nil {
 		c.initFunc(ctx, c.srv)
