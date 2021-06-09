@@ -10,8 +10,8 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/influxdata/influxdb1-client v0.0.0-20200515024757-02f0bf5dbca3
 	github.com/jinzhu/gorm v1.9.15
-	github.com/magicdvd/nacos-client v0.0.0-20200719104904-20c27156a870
-	github.com/magicdvd/nacos-grpc v0.0.0-20200727081900-70476fe0d0c4
+	github.com/magicdvd/nacos-client v0.0.0-20210609122731-160b0bb76754
+	github.com/magicdvd/nacos-grpc v0.0.0-20210609124341-fc40bad9c022
 	github.com/mattn/go-sqlite3 v2.0.1+incompatible // indirect
 	github.com/opentracing-contrib/go-grpc v0.0.0-20191001143057-db30781987df
 	github.com/opentracing/opentracing-go v1.2.0

@@ -316,14 +316,14 @@ func (c *MSManager) RunWith(ctx context.Context, name string, fns ...func(contex
 		svc := c.svcs[i]
 		grp.Go(func() error {
 			err := c.svcCenter.Register(ctx, svc)
-			if err != nil {
-				return err
-			}
-			<-ctx.Done()
-			err = ctx.Err()
-			if err != nil {
-				_ = c.svcCenter.Deregister(ctx, svc)
-			}
+			// if err != nil {
+			// 	return err
+			// }
+			// <-ctx.Done()
+			// err = ctx.Err()
+			// if err != nil {
+			_ = c.svcCenter.Deregister(ctx, svc)
+			//}
 			return err
 		})
 		grp.Go(func() error {
