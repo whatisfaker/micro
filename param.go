@@ -25,6 +25,8 @@ type paramMap struct {
 	tcpRoute         func([]byte) int
 	tcpManulShutdown bool
 	tcpIdleTime      time.Duration
+	tcpBufSizeMin    int
+	tcpBufSizeMax    int
 }
 
 type Param interface {
@@ -124,5 +126,14 @@ func ParamTCPManualShutdown() Param {
 func ParamTCPIdleTime(d time.Duration) Param {
 	return newParam(func(m *paramMap) {
 		m.tcpIdleTime = d
+	})
+}
+
+func ParamTCPBufferSize(min int, max ...int) Param {
+	return newParam(func(m *paramMap) {
+		m.tcpBufSizeMin = min
+		if len(max) > 0 {
+			m.tcpBufSizeMax = max[0]
+		}
 	})
 }
