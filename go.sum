@@ -207,8 +207,8 @@ github.com/whatisfaker/gin-contrib v0.0.0-20200805080910-3cf482a5faf3 h1:rOSekeS
 github.com/whatisfaker/gin-contrib v0.0.0-20200805080910-3cf482a5faf3/go.mod h1:KbSNHOPvdVzOQjyiy+XhZUMP2k5Vt9Qe7dxDQhjaOa0=
 github.com/whatisfaker/gormzap v0.0.0-20200425142924-3b939e0299a9 h1:5nXy5L5Q0EIssmf0G6yVJbY2NSgIb1duoD5FI7pJd/E=
 github.com/whatisfaker/gormzap v0.0.0-20200425142924-3b939e0299a9/go.mod h1:+5BMMlbiZ8goO8Ddg0lwVkxjmUHoqY2A2eUkM9scjvc=
-github.com/whatisfaker/ms v0.0.0-20210422091835-bed705a801f5 h1:Ml+Xi8Z9IRERl0C5O4wBi1hbtdIsPHFp5Nn0ciW64Bo=
-github.com/whatisfaker/ms v0.0.0-20210422091835-bed705a801f5/go.mod h1:lt03blUgTbWj2PDflKtBm6Phe9ZkojfrPbphDMgI3jg=
+github.com/whatisfaker/ms v0.0.0-20210611010816-30120329b0dc h1:Z9K4m3eMCDQTewxodtir7zrUMlOSONy4dCwTgnAOFz4=
+github.com/whatisfaker/ms v0.0.0-20210611010816-30120329b0dc/go.mod h1:lt03blUgTbWj2PDflKtBm6Phe9ZkojfrPbphDMgI3jg=
 github.com/whatisfaker/zaptrace v0.0.0-20200426080521-afe01b9f682e/go.mod h1:9nbAoY+10Z7S6XiqTO1nIMbM9R5PGfTCiKzAuxsyqQA=
 github.com/whatisfaker/zaptrace v0.0.0-20200728144141-eeea96c00ec9 h1:kJc1rg96I94qsqfI1gbochvHFhHfvVoZhdR42yAzcoo=
 github.com/whatisfaker/zaptrace v0.0.0-20200728144141-eeea96c00ec9/go.mod h1:9nbAoY+10Z7S6XiqTO1nIMbM9R5PGfTCiKzAuxsyqQA=
