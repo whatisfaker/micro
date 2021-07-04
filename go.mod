@@ -18,7 +18,7 @@ require (
 	github.com/whatisfaker/conf v0.0.0-20200808060023-416d0dab7e9d
 	github.com/whatisfaker/gin-contrib v0.0.0-20200805080910-3cf482a5faf3
 	github.com/whatisfaker/gormzap v0.0.0-20200425142924-3b939e0299a9
-	github.com/whatisfaker/ms v0.0.0-20210611010816-30120329b0dc
+	github.com/whatisfaker/ms v0.0.0-20210704082810-c70f77e15aba
 	github.com/whatisfaker/zaptrace v0.0.0-20200728144141-eeea96c00ec9
 	go.mongodb.org/mongo-driver v1.3.5
 	go.uber.org/zap v1.15.0
