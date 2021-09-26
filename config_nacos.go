@@ -23,7 +23,7 @@ type nacosCC struct {
 var _ ConfigCenter = (*nacosCC)(nil)
 
 func newNacosCC(addr string, namespace string, key string, log *log.Factory) (*nacosCC, error) {
-	client, err := nacos.NewServiceClient(addr, nacos.DefaultNameSpaceID(namespace), nacos.Log(NewZapLogger(log)), nacos.LogLevel(log.Level()))
+	client, err := nacos.NewServiceClient(addr, nacos.DefaultTenant(namespace), nacos.Log(NewZapLogger(log)), nacos.LogLevel(log.Level()))
 	if err != nil {
 		return nil, err
 	}
