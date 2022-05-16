@@ -20,7 +20,7 @@ require (
 	github.com/whatisfaker/gormzap v0.0.0-20200425142924-3b939e0299a9
 	github.com/whatisfaker/ms v0.0.0-20210704082810-c70f77e15aba
 	github.com/whatisfaker/zaptrace v0.0.0-20200728144141-eeea96c00ec9
-	go.mongodb.org/mongo-driver v1.3.5
+	go.mongodb.org/mongo-driver v1.5.1
 	go.uber.org/zap v1.15.0
 	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208
 	golang.org/x/sys v0.0.0-20200728102440-3e129f6d46b1 // indirect
